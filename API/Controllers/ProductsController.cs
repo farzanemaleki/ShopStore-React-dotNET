@@ -1,6 +1,7 @@
 using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -15,16 +16,16 @@ namespace API.Controllers
             this.dbContext = dbContext;
         }
         [HttpGet]
-        public ActionResult<List<Product>> GetProducts() 
+        public async Task<ActionResult<List<Product>>> GetProducts() 
         {
-            var products = dbContext.Products.ToList();
+            var products = await dbContext.Products.ToListAsync();
             return Ok(products);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Product> GetProduct(int id) 
+        public async Task<ActionResult<Product>> GetProduct(int id) 
         {
-            var product = dbContext.Products.SingleOrDefault(p => p.Id == id);
+            var product = await dbContext.Products.SingleOrDefaultAsync(p => p.Id == id);
             return Ok(product);
         }
     }
