@@ -1,24 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-
 function App() {
+  const[products, setProducts] = useState([
+    {name:"p1", price:100},
+    {name:"p2", price:200}
+  ]);
+  useEffect(() =>{
+    fetch("https://localhost:7289/api/Products")
+    .then(response => response.json())
+    .then(data => setProducts(data))
+  },[]);
+  const AddProduct = () =>{
+    setProducts(prevState => [...prevState, {name: `p${prevState.length+1}`, price: (prevState.length+1)*100 }]);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Re-Store</h1>
+      <ul>
+        {products.map((p,index) => (
+          <li key={index}>{p.name} with price ${p.price}</li>
+        ))}
+      </ul>
+      <button onClick={AddProduct}>Add Product</button>
     </div>
   );
 }

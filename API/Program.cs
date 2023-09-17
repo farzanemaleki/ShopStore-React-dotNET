@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 string connectionString = builder.Configuration.GetConnectionString("DeafaultConnection");
 builder.Services.AddDbContext<StoreContext>(opt => { opt.UseSqlite(connectionString); }) ;
-
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -24,13 +24,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+app.UseRouting();
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+});
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-var scope = app.Services.CreateScope();
+using var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
