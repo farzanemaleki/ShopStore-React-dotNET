@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Typography } from '@mui/material';
+
 import './styles.css';
 import { Product } from '../models/Product';
 import Catalog from '../../features/catalog/Catalog';
@@ -14,14 +16,16 @@ function App() {
       id: prevState.length + 101,
       name: `p${prevState.length+1}`, 
       description: "some desscription",
-      pictureUlr: "some image URL",
       price: (prevState.length+1)*100,
       brand: "new brand",
+      pictureUlr: `https://picsum.photos/${(prevState.length+1)*100}`,
     }]);
   }
   return (
     <div>
-      <h1>Re-Store</h1>
+      <Typography variant="h2">
+        Shop Store
+      </Typography>
       <Catalog  products={products} AddProduct={AddProduct}/>
     </div>
   );
