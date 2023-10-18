@@ -4,6 +4,10 @@ import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/materia
 
 import './styles.css';
 import { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import HomePage from '../../features/home/HomePage';
+import AboutPage from '../../features/about/AboutPage';
+import ContactPage from '../../features/contact/ContactPage';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -24,7 +28,12 @@ function App() {
       <CssBaseline />
       <Header onChange={ToggleTheme} darkMode={darkMode}/>
       <Container>
-        <Catalog />
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/catalog' element={<Catalog />} />
+          <Route path='/about' element={<AboutPage />} />
+          <Route path='/contact' element={<ContactPage />} />
+        </Routes>
       </Container>
     </ThemeProvider>
   );
