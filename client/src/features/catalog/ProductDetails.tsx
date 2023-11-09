@@ -21,7 +21,7 @@ export default function ProductDetails () {
     
     return(
         <>
-        <Grid container spacing={6}>
+        <Grid container spacing={12}>
             <Grid item xs={6}>
                <img src={product.pictureUlr} alt={product.name} style={{ width: '100%'}} />
             </Grid>
